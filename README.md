@@ -1900,8 +1900,8 @@ DNS_NAME: "DNS Name of your application"
 * Create an ``S3 bucket`` for Helm charts. In the bucket, create a ``folder`` called ``stable/myapp``. The example in this pattern uses s3://petclinic-helm-charts-<put-your-name>/stable/myapp as the target chart repository.
 
 ```bash
-aws s3api create-bucket --bucket petclinic-helm-charts-derya --region us-east-1
-aws s3api put-object --bucket petclinic-helm-charts-derya --key stable/myapp/
+aws s3api create-bucket --bucket petclinic-helm-charts-<put-your-name> --region us-east-1
+aws s3api put-object --bucket petclinic-helm-charts-<put-your-name> --key stable/myapp/
 ```
 
 * Install the helm-s3 plugin for Amazon S3.
@@ -1923,7 +1923,7 @@ exit
 * ``Initialize`` the Amazon S3 Helm repository.
 
 ```bash
-AWS_REGION=us-east-1 helm s3 init s3://petclinic-helm-charts-derya/stable/myapp 
+AWS_REGION=us-east-1 helm s3 init s3://petclinic-helm-charts-<put-your-name>/stable/myapp 
 ```
 
 * The command creates an ``index.yaml`` file in the target to track all the chart information that is stored at that location.
@@ -1931,14 +1931,14 @@ AWS_REGION=us-east-1 helm s3 init s3://petclinic-helm-charts-derya/stable/myapp
 * Verify that the ``index.yaml`` file was created.
 
 ```bash
-aws s3 ls s3://petclinic-helm-charts-derya/stable/myapp/
+aws s3 ls s3://petclinic-helm-charts-<put-your-name>/stable/myapp/
 ```
 
 * Add the Amazon S3 repository to Helm on the client machine. 
 
 ```bash
 helm repo ls
-AWS_REGION=us-east-1 helm repo add stable-petclinicapp s3://petclinic-helm-charts-derya/stable/myapp/
+AWS_REGION=us-east-1 helm repo add stable-petclinicapp s3://petclinic-helm-charts-<put-your-name>/stable/myapp/
 ```
 
 * Update `version` and `appVersion` field of `k8s/petclinic_chart/Chart.yaml` file as below for testing.
@@ -2513,7 +2513,7 @@ git push origin dev
 - Download and extract the latest release of eksctl with the following command.
 
 ```bash
-curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+curl --silent --location "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 ```
 
 - Move the extracted binary to /usr/local/bin.
@@ -2533,7 +2533,7 @@ eksctl version
 - Download the Amazon EKS vended kubectl binary.
 
 ```bash
-curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.27.7/2023-11-14/bin/linux/amd64/kubectl
+curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.29.0/2024-01-04/bin/linux/amd64/kubectl
 ```
 
 - Apply execute permissions to the binary.
@@ -2551,7 +2551,7 @@ sudo mv kubectl /usr/local/bin
 - After you install kubectl , you can verify its version with the following command:
 
 ```bash
-kubectl version --short --client
+kubectl version --client
 ```
 
 - Switch user to jenkins for creating eks cluster. Execute following commands as `jenkins` user.
@@ -2589,7 +2589,7 @@ eksctl create cluster -f cluster.yaml
 
 ```bash
 export PATH=$PATH:$HOME/bin
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.0/deploy/static/provider/cloud/deploy.yaml
 ```
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
